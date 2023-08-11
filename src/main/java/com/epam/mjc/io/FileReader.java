@@ -1,7 +1,6 @@
 package com.epam.mjc.io;
 
 import java.io.*;
-import java.util.Arrays;
 
 
 public class FileReader {
@@ -36,7 +35,6 @@ public class FileReader {
                     try {
                         throw new IOException("Such field does not exist.");
                     } catch (IOException e) {
-                        System.out.println(e.getMessage());
                         e.printStackTrace();
                         return null;
                     }
@@ -59,12 +57,8 @@ public class FileReader {
             while ((buffer = br.readLine()) != null) {
                 content.append(buffer).append("\n");
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println(e.getMessage());
             return null;
         }
         return content.toString().strip();
