@@ -11,6 +11,6 @@ public class Main {
 
         Profile profile = fr.getDataFromFile(f);
 
-        System.out.println(profile);
+        System.err.println(profile);
     }
 }

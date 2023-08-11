@@ -8,13 +8,12 @@ public class FileReader {
 
     public Profile getDataFromFile(File file) {
         String fileContent = readFileIntoString(file);
-        System.out.println(fileContent);
-        String[] keyValues = parseFileContentForKeyValue(fileContent);
-        System.out.println(Arrays.toString(keyValues));
-        return mapDataToProfileObject(keyValues);
+        if (fileContent != null) {
+            String[] keyValues = parseFileContentForKeyValue(fileContent);
+            return mapDataToProfileObject(keyValues);
+        } else return null;
     }
 
-    // Create Profile
     private Profile mapDataToProfileObject(String[] keyValues) {
         Profile p = new Profile();
         String[] pair;
@@ -33,43 +32,41 @@ public class FileReader {
                 case "Phone:":
                     p.setPhone(Long.valueOf(pair[1]));
                     break;
+                default:
+                    try {
+                        throw new IOException("Such field does not exist.");
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                        e.printStackTrace();
+                        return null;
+                    }
             }
         }
         return p;
     }
 
-    // Parse this string for key-value pairs
     private String[] parseFileContentForKeyValue(String fileContent) {
-        String[] pairs = fileContent.split("\\n");
-        return pairs;
+        return fileContent.split("\\n");
     }
 
-    // Reading file data into string
     private String readFileIntoString(File file) {
-        String content = "";
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new java.io.FileReader(file.getPath()));
-            String buffer = "";
+        StringBuilder content = new StringBuilder();
+
+        try (BufferedReader br =
+                     new BufferedReader(new java.io.FileReader(file.getPath()))) {
+
+            String buffer = null;
             while ((buffer = br.readLine()) != null) {
-                // buffer = br.readLine();
-                content = content + buffer.strip() + "\n";
+                content.append(buffer).append("\n");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println(e.getMessage());
             return null;
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
-        return content.strip();
+        return content.toString().strip();
     }
 }
