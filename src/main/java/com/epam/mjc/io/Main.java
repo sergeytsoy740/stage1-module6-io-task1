@@ -15,6 +15,9 @@ public class Main {
 
         Profile profile = new FileReader().getDataFromFile(new File(relativePath));
 
-        logger.log(Level.INFO, profile.toString());
+        if (profile != null) {
+            logger.log(Level.INFO, profile.toString());
+        }
+
     }
 }
