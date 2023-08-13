@@ -15,9 +15,9 @@ public class Main {
 
         Profile profile = new FileReader().getDataFromFile(new File(relativePath));
 
-        if (profile != null) {
-            logger.log(Level.INFO, profile.toString());
-        }
+        if (profile == null) {
+            logger.log(Level.SEVERE, "Something wrong");
+        } else logger.log(Level.INFO, profile.toString());
 
     }
 }
