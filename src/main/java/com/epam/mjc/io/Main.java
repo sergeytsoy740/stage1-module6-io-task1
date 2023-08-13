@@ -11,5 +11,7 @@ public class Main {
                 "src" + s + "main" + s + "resources" + s + "Profile.txt"; // valid
 
         Profile profile = new FileReader().getDataFromFile(new File(relativePath));
+
+        System.err.println(profile);
     }
 }
