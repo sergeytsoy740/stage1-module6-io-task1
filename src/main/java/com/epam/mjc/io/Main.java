@@ -1,9 +1,12 @@
 package com.epam.mjc.io;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
+        Logger logger = Logger.getLogger(Main.class.getName());
 
         String s = File.separator;
 
@@ -12,6 +15,6 @@ public class Main {
 
         Profile profile = new FileReader().getDataFromFile(new File(relativePath));
 
-        System.err.println(profile);
+        logger.log(Level.INFO, profile.toString());
     }
 }
